@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Teddy Open",
+    "slug": "Teddy-Open",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "br.com.teddyopen"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "br.com.teddyopen"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "EXPO_PUBLIC_API_PARTNERS": "https://644060ba792fe886a88de1b9.mockapi.io/v1/test/partners",
+      "EXPO_PUBLIC_API_EXTERNAL_COMPANIES": "https://655cf25525b76d9884fe3153.mockapi.io/v1/external-companies",
+      "eas": {
+        "projectId": "62ba9dcc-5198-4431-af30-54e13f0b2cef"
+      }
+    },
+    "owner": "waynejf"
+  }
+}
