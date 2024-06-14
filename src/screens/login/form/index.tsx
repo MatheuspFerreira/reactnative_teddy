@@ -1,9 +1,18 @@
-import { useInputSecureTextEntry } from "../../../hooks/useInputSecureTextEntry";
+
 import { Responsiveness } from "../../../utils/styles/SizeResponsiveness";
 import { handleApiError } from "../../../utils/helpers/handleApiError";
+import { user } from "../../../utils/constants/user";
+
+import { useInputSecureTextEntry } from "../../../hooks/useInputSecureTextEntry";
+import { useIsConnected } from "../../../hooks/useIsConnected";
+import { useLoading } from "../../../hooks/useLoading";
 import { useAuthContext } from "../../../context/AuthContext";
+import { useUserContext } from "../../../context/userContext";
+
+
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native-paper";
+
 import {
   OverLay,
   Title,
@@ -16,10 +25,8 @@ import {
   ErrorText,
 } from "./styles";
 import { ForgotPassword } from "./forgotPassword";
-import { useLoading } from "../../../hooks/useLoading";
-import { useIsConnected } from "../../../hooks/useIsConnected";
-import { useUserContext } from "../../../context/userContext";
-import { user } from "../../../utils/constants/user";
+
+
 
 type IForm = {
   user: string;

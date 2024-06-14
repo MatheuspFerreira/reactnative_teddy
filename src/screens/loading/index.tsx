@@ -14,9 +14,11 @@ import {
   AnimatedBackGround,
   AnimatedText,
 } from "./styles";
+import { useAuthContext } from "../../context/AuthContext";
 
 export function LoadingScreen() {
   const navigation = useNavigation<NavigationProp<RootStackPublicParamList, "Loading">>();
+  const { isSigned } = useAuthContext();
 
   const opacity = useSharedValue(0);
   const scale = useSharedValue(0.3);
@@ -47,6 +49,10 @@ export function LoadingScreen() {
   const handleNavigation = async () => {
     try {
       const isGoingToLogin = await storageOnboardingGet();
+
+      if(isGoingToLogin){
+        await isSigned()
+      }
 
       const screen = isGoingToLogin ? "Login" : "Onboarding";
 

@@ -11,8 +11,8 @@ export function CreatePartner () {
 
 
     return(
-        <Modal visible={visible} setVisible={setVisible}>
-            <Dialog.Content style={{ gap: 10 }}>
+        <Modal visible={visible} setVisible={setVisible} >
+            <Dialog.Content style={{ gap: 10 }} >
                 {modalLoading && visible ? (
                     <LoadingContainer>
                     <Loading size={44} />

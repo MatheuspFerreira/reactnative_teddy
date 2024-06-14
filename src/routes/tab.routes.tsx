@@ -9,9 +9,10 @@ import { Partners } from "../screens/partners";
 import { useUserContext } from "../context/userContext";
 import { isIOSPlatform } from "../utils/helpers/isIOSPlatform";
 import { Companies } from "../screens/companies";
-import { useConfigNotification } from "../notification/config";
+
 import { useEffect } from "react";
 import { Alert } from "react-native";
+import { useConfigNotification } from "../notification/config";
 
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -22,22 +23,28 @@ export function TabsRoutes() {
   const gap = isIOS? 0 : Responsiveness(1);
   const maxHeight = isIOS ? "auto" : 80;
   const tabBarHeight = isIOS ? Responsiveness(7.35) : Responsiveness(6.6);
-
   const { handleNotificationConfig } = useConfigNotification();
 
   useEffect(() => {
     const configureNotifications = async () => {
+      
       const { receivedListenerUnSubscription, responseListenerUnSubscription } = await handleNotificationConfig();
 
       return () => {
-        if (receivedListenerUnSubscription) receivedListenerUnSubscription();
-        if (responseListenerUnSubscription) responseListenerUnSubscription();
+        receivedListenerUnSubscription();
+        responseListenerUnSubscription();
       };
     };
 
-    configureNotifications().catch((error) => {
-      Alert.alert('Error', `Failed to configure notifications: ${error}`);
+    const cleanup = configureNotifications().catch((error) => {
+      Alert.alert('Error', `Falha ao configurar as notificações: ${error}`);
     });
+
+    return () => {
+      cleanup.then((cleanupFn) => {
+        if (cleanupFn) cleanupFn();
+      })
+    };
   }, []);
 
   return (

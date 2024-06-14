@@ -3,23 +3,34 @@ import { USER_STORAGE } from "./storage-config";
 import { UserType } from "../context/types/UserContext";
 
 
-
-
 export async function storageUserSave(user:UserType) {
-  await AsyncStorage.setItem( USER_STORAGE, JSON.stringify(user));
+  try {
+    await AsyncStorage.setItem( USER_STORAGE, JSON.stringify(user));
+  } catch (error) {
+    throw error
+  }
 }
 
-export async function storageUserGet() {
+export async function storageUserGet(): Promise<string | UserType> {
+  try {
     const user = await AsyncStorage.getItem(USER_STORAGE);
+
+    if (!user) return user;
+
+    const userToParse: UserType = JSON.parse(user);
     
-    if(!user) return user;
-
-    const userToParse:UserType = JSON.parse(user);
-
     return userToParse;
-};
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function storageUserRemove () {
-  await AsyncStorage.removeItem(USER_STORAGE)
+  try {
+    await AsyncStorage.removeItem(USER_STORAGE)
+  } catch (error) {
+    throw error;
+  }
+  
 };
 

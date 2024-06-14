@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { Responsiveness } from "../../utils/styles/SizeResponsiveness";
 
 export const OverLay = styled.View`
   width: 100%;

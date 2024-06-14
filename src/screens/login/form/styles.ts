@@ -1,7 +1,5 @@
-import { ThemeProps } from "../../../@types/Styled";
 import styled from "styled-components/native";
 import { TextInput } from "react-native-paper";
-import { Platform } from "react-native";
 import { Responsiveness } from "../../../utils/styles/SizeResponsiveness";
 import { fontSize } from "../../../utils/styles/fontSize";
 
@@ -9,33 +7,6 @@ type ButtonProps = {
   loading: boolean;
 }
 
-const getButtonStyles = (theme: ThemeProps) => {
-  if (Platform.OS === "ios") {
-    return `
-        shadow-color: ${theme.colors.primary};
-        shadow-offset: 0px 2px;
-        shadow-opacity: 0.7;
-        shadow-radius: 2px;
-      `;
-  } else {
-    return `
-        elevation: 4;
-        shadow-color: ${theme.colors.primary};
-      `;
-  }
-};
-
-const getShadowStyles = () => {
-  if (Platform.OS === "ios") {
-    return `
-        shadow-offset: 0px 2px;
-        shadow-opacity: 0.7;
-        shadow-radius: 2px;
-      `;
-  } else {
-    return `elevation: 5;`;
-  }
-};
 
 export const OverLay = styled.View`
   width: 89%;
@@ -45,7 +16,6 @@ export const OverLay = styled.View`
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  ${getShadowStyles}
   bottom: 73.5%;
   border-radius: 20px;
   padding-bottom: ${Responsiveness(1.8)}px;
@@ -100,7 +70,6 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   align-items: center;
   justify-content: center;
   border-radius: ${Responsiveness(1)}px;
-  ${(props) => !props.loading && getButtonStyles(props.theme)}
 `;
 
 export const ButtonText = styled.Text`

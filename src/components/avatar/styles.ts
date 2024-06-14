@@ -1,28 +1,11 @@
 import { Responsiveness } from "../../utils/styles/SizeResponsiveness";
 import { fontSize } from "../../utils/styles/fontSize";
-import { ThemeProps } from "../../@types/Styled";
 import styled from "styled-components/native";
-import { Platform } from "react-native";
 
 interface CircleAvatarProps {
   isActive: boolean;
 }
 
-const getShadowStyles = (theme: ThemeProps) => {
-  if (Platform.OS === "ios") {
-    return `
-      shadow-color: ${theme.colors.primary};
-      shadow-offset: 0px 2px;
-      shadow-opacity: 0.7;
-      shadow-radius: 2px;
-    `;
-  } else {
-    return `
-      elevation: 0;
-
-    `;
-  }
-};
 
 export const AvatarContainer = styled.View<CircleAvatarProps>`
   width: auto;
@@ -90,7 +73,6 @@ export const TagName = styled.View<CircleAvatarProps>`
   position: relative;
   top:-8.5px;
   z-index: -10;
-  ${(props) => props.isActive && getShadowStyles(props.theme)}
   
 `;
 export const Name = styled.Text<CircleAvatarProps>`

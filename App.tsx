@@ -24,8 +24,9 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1, height:"auto" }}>
           <LoadingScreenContextProvider>
             <PrivacyContextProvider>
-              <AuthContentProvider>
+              
                 < UserContextProvider>
+                <AuthContentProvider>
                   <PartnersContextProvider>
                     <PartnerFilterContextProvider>
                       <CompaniesContextProvider>
@@ -35,8 +36,9 @@ export default function App() {
                       </CompaniesContextProvider>
                     </PartnerFilterContextProvider>
                   </PartnersContextProvider>
+                  </AuthContentProvider>
                 </UserContextProvider>
-              </AuthContentProvider>
+            
             </PrivacyContextProvider>
           </LoadingScreenContextProvider>
         </GestureHandlerRootView>

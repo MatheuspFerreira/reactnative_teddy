@@ -66,6 +66,7 @@ export function Partners() {
       <PlusCircleButton
         onPress={() => setVisible(true)}
         disabled={loading}
+        testID="plus-button"
       >
         <PlusCircleIcon name="pluscircle" />
       </PlusCircleButton>

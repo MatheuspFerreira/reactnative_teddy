@@ -86,11 +86,17 @@ export function useConfigNotification() {
         console.log("Resposta da notificação: ", response);
       });
 
-      const receivedListenerUnSubscription = () =>
-        notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
+      const receivedListenerUnSubscription = () => {
+        if (notificationListener.current) {
+          Notifications.removeNotificationSubscription(notificationListener.current);
+        }
+      };
 
-      const responseListenerUnSubscription = () =>
-        responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+      const responseListenerUnSubscription = () => {
+        if (responseListener.current) {
+          Notifications.removeNotificationSubscription(responseListener.current);
+        }
+      };
 
       return {
         receivedListenerUnSubscription,
@@ -102,10 +108,14 @@ export function useConfigNotification() {
       } else {
         handleRegistrationError(`${error}`);
       }
+      return {
+        receivedListenerUnSubscription: () => {},
+        responseListenerUnSubscription: () => {},
+      };
     }
   };
 
   return {
-    handleNotificationConfig,
+    handleNotificationConfig
   };
 }

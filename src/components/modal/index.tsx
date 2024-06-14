@@ -19,11 +19,12 @@ export function Modal({
   const hideDialog = () => setVisible(false);
 
   return (
-    <Portal>
+    <Portal >
       <CustomModal 
         visible={visible} 
         dismissable={dismissable}
         onDismiss={hideDialog}
+        
       >
         {children}
       </CustomModal>

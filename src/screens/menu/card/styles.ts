@@ -1,4 +1,4 @@
-import { Card as CardPaper, CardProps} from "react-native-paper";
+import { Card as CardPaper } from "react-native-paper";
 import styled from "styled-components/native";
 import { Responsiveness } from "../../../utils/styles/SizeResponsiveness";
 

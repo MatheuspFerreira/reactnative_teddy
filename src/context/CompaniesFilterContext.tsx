@@ -5,7 +5,7 @@ import { useModal } from "../hooks/useModal";
 import { handleApiError } from "../utils/helpers/handleApiError";
 import { useIsConnected } from "../hooks/useIsConnected";
 import { Alert } from "react-native";
-import { sortPartnersByIdDesc } from "../utils/helpers/sortPartnersByIdDesc";
+import { sortByIdDesc } from "../utils/helpers/sortByIdDesc";
 import { FilterContextProviderProps, FilterContextType } from "./types/PartnersFilterContext";
 import { useCompaniesContext } from "./CompaniesContext";
 import { filterCompaniesByID } from "../api/companies/filterById-companies";
@@ -81,7 +81,7 @@ export function CompaniesFilterContextProvider({
 
             const { data }:ResponseCompaniesType = response;
 
-            const sortById = sortPartnersByIdDesc(data);
+            const sortById = sortByIdDesc(data);
 
             setCompanies(sortById);
             setIsFiltred(false);

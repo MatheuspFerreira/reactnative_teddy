@@ -7,7 +7,7 @@ import { handleApiError } from "../utils/helpers/handleApiError";
 import { useIsConnected } from "../hooks/useIsConnected";
 import { Alert } from "react-native";
 import { getAllPartners } from "../api/partners/getAll-partners";
-import { sortPartnersByIdDesc } from "../utils/helpers/sortPartnersByIdDesc";
+import { sortByIdDesc } from "../utils/helpers/sortByIdDesc";
 import { FilterContextProviderProps, FilterContextType, ResponseGetAllPartners, ResponsePartners } from "./types/PartnersFilterContext";
 
 
@@ -34,10 +34,9 @@ export function PartnerFilterContextProvider({
             const isConnected = await useIsConnected("Você precisa estar conectado a uma rede para usar o filtro.");
 
             if(!isConnected) {
-                setVisible(false);
-                setLoading(false);
-
-                return;
+              setVisible(false);
+              setLoading(false);
+              return;
             };
 
             const response = await filterPartnerByID(selectedId);
@@ -79,7 +78,7 @@ export function PartnerFilterContextProvider({
 
             const { data }:ResponseGetAllPartners = response;
 
-            const sortById = sortPartnersByIdDesc(data);
+            const sortById = sortByIdDesc(data);
 
             setPartners(sortById);
             setIsFiltred(false);
@@ -105,7 +104,7 @@ export function usePartnerFilterContext() {
   const context = useContext(PartnerFilterContext);
   
   if(!context){
-    throw new Error("Erro ao acessar o contexto CompaniesFilterContext.");
+    throw new Error("Erro ao acessar o contexto PartnessFilterContext.");
   };
 
   const { selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter, handleClearFilter} = context;

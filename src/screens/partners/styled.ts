@@ -4,6 +4,7 @@ import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIc
 import { fontSize } from "../../utils/styles/fontSize";
 import { IconButton } from "../../components/button/IconButton";
 import { DataTable as PaperDataTable } from "react-native-paper";
+import { Responsiveness } from "../../utils/styles/SizeResponsiveness";
 
 
 export const Container = styled.View`
@@ -30,10 +31,10 @@ export const PlusCircleIcon = styled(AntDesignIcon).attrs(({ theme }) => ({
 }))``;
 
 export const FilterButton = styled(IconButton)`
-  width: 65px;
-  height: 65px;
+  width: ${Responsiveness(5.5)}px;
+  height: ${Responsiveness(5.5)}px;
   position: absolute;
-  bottom: 45%;
+  bottom: 48%;
   left: 78%;
   z-index: 1;
   border-radius: 40px;

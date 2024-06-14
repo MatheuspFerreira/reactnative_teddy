@@ -78,9 +78,9 @@ export function EditCompany({ company, visible, setVisible }: EditCompanyProps) 
 
     return (
         <Modal visible={visible} setVisible={setVisible}>
-            <KeyboardAwareScrollView extraScrollHeight={100} enableOnAndroid={true} keyboardShouldPersistTaps='handled'>
+  
                 <Container>
-                    <Title>Editar Parceiro</Title>
+                    <Title>Editar Empresa</Title>
                     <Form>
                         <Controller
                             control={control}
@@ -119,7 +119,7 @@ export function EditCompany({ company, visible, setVisible }: EditCompanyProps) 
                         {loading ? 'Aguarde...' : 'Editar'}
                     </ActionButton>
                 </Dialog.Actions>
-            </KeyboardAwareScrollView>
+           
         </Modal>
     );
 }

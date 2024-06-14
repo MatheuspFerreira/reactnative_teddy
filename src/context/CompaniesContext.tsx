@@ -2,7 +2,7 @@ import {createContext, useContext, useState } from "react";
 import { useIsConnected } from "../hooks/useIsConnected";
 import { useLoading } from "../hooks/useLoading";
 import { useModal } from "../hooks/useModal";
-import { sortPartnersByIdDesc } from "../utils/helpers/sortPartnersByIdDesc";
+import { sortByIdDesc } from "../utils/helpers/sortByIdDesc";
 import { handleApiError } from "../utils/helpers/handleApiError";
 import { useToast } from "../hooks/useToast";
 import { CompaniesContextProviderProps, CompaniesContextType, EditCompaniesByIDType, ResponseCompanies, ResponseCompaniesType } from "./types/CompaniesContext";
@@ -10,6 +10,7 @@ import { getAllCompanies } from "../api/companies/getAll-companies";
 import { createCompanies } from "../api/companies/create-companies";
 import { deleteCompaniesById } from "../api/companies/deleteById-companies";
 import { editCompaniesByID } from "../api/companies/editById-companies";
+import { storageCompaniesGet, storageCompaniesSave } from "../storage/storage-companies";
 
 
 export const CompaniesContext = createContext<CompaniesContextType | null>(null);
@@ -40,13 +41,24 @@ export function CompaniesContextProvider({
 
       const isConnected = await useIsConnected("Para trazer uma lista atualizada das empresas, você precisa estar conectado.");
       
-      if (!isConnected) return;
+      if (!isConnected){
+
+        const storageCompanies = storageCompaniesGet();
+        
+        if(!storageCompanies) return;
+
+        setCompanies(storageCompanies as unknown as CompanyType[]);
+        
+        return;
+      }
   
       const response = await getAllCompanies();
 
       const { data }: ResponseCompaniesType = response;
 
-      const sortById = sortPartnersByIdDesc<CompanyType>(data);
+      const sortById = sortByIdDesc<CompanyType>(data);
+
+      await storageCompaniesSave(sortById);
 
       setCompanies(sortById);
     } catch (error) {

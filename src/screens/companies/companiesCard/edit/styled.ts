@@ -7,8 +7,7 @@ import { IconButton } from "../../../../components/button/IconButton";
 
 export const Container = styled.View`
   width: 100%;
-  height: 80%;
-  min-height: 5%;
+  height: auto;
   padding: 0px 5%;
   background-color: white;
 

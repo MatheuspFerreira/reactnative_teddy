@@ -5,12 +5,13 @@ import { createPartner } from "../api/partners/create-partner";
 import { useLoading } from "../hooks/useLoading";
 import { useModal } from "../hooks/useModal";
 import { getAllPartners } from "../api/partners/getAll-partners";
-import { sortPartnersByIdDesc } from "../utils/helpers/sortPartnersByIdDesc";
+import { sortByIdDesc } from "../utils/helpers/sortByIdDesc";
 import { handleApiError } from "../utils/helpers/handleApiError";
 import { useToast } from "../hooks/useToast";
 import { EditPartnerByIDType, PartnersContextProviderProps, PartnersContextType, ResponseNewPartnerType, ResponsePartnersType } from "./types/PartnersContext";
 import { deletePartnerById } from "../api/partners/deleteById-partner";
 import { editPartnerByID } from "../api/partners/editById-partner";
+import { storagePartnesGet, storagePartnesSave } from "../storage/storage-partnes";
 
 
 
@@ -35,13 +36,24 @@ export function PartnersContextProvider({
 
       const isConnected = await useIsConnected("Para trazer uma lista atualizada dos parceiros, você precisa estar conectado.");
       
-      if (!isConnected) return;
+      if (!isConnected){
+
+        const storagePartnes = storagePartnesGet();
+        
+        if(!storagePartnes) return;
+
+        setPartners(storagePartnes as unknown as IPartners[]);
+        
+        return;
+      }
   
       const response = await getAllPartners();
 
       const { data }: ResponsePartnersType = response;
 
-      const sortById = sortPartnersByIdDesc<IPartners>(data);
+      const sortById = sortByIdDesc<IPartners>(data);
+
+      await storagePartnesSave(sortById);
 
       setPartners(sortById);
     } catch (error) {
