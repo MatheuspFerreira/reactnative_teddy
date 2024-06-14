@@ -62,7 +62,7 @@ export function useConfigNotification() {
         const pushTokenString = await Notifications.getDevicePushTokenAsync();
         return pushTokenString;
       } else {
-        throw new Error("É necessário usar um dispositivo físico para notificações push.");
+        console.log("É necessário usar um dispositivo físico para notificações push.");
       }
     } catch (error) {
       throw error;

@@ -1,8 +1,6 @@
 import axios from "axios";
 import { AppError } from "../../utils/appError";
 
-const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-
 const api = axios.create({
   timeout: 10000,
 });
