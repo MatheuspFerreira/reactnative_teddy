@@ -96,7 +96,19 @@ export function CompaniesFilterContextProvider({
     };
   
   return (
-    <CompaniesFilterContext.Provider value={{ selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter , handleClearFilter}}>
+    <CompaniesFilterContext.Provider value={{ 
+        selectedId, 
+        setSelectedId, 
+        loading,
+        setLoading, 
+        visible, 
+        setVisible, 
+        isFiltred, 
+        setIsFiltred, 
+        handleFilter, 
+        handleClearFilter
+      }}
+    >
       {children}
     </CompaniesFilterContext.Provider>
   );
@@ -110,8 +122,30 @@ export function useCompaniesFilterContext() {
     throw new Error("Erro ao acessar o contexto CompaniesFilterContext.");
   };
 
-  const { selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter, handleClearFilter} = context;
+  const { 
+        selectedId, 
+        setSelectedId, 
+        loading,
+        setLoading, 
+        visible, 
+        setVisible, 
+        isFiltred, 
+        setIsFiltred, 
+        handleFilter, 
+        handleClearFilter
+      } = context;
 
-  return { selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter, handleClearFilter};
+  return { 
+        selectedId, 
+        setSelectedId, 
+        loading,
+        setLoading, 
+        visible, 
+        setVisible, 
+        isFiltred, 
+        setIsFiltred, 
+        handleFilter, 
+        handleClearFilter
+      };
 }
 

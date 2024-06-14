@@ -116,7 +116,7 @@ export function TabsRoutes() {
               color={color}
               size={fontSize(2)}
             />
-          ),
+          )
         }}
       />
     </Tab.Navigator>

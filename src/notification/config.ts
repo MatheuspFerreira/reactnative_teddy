@@ -108,10 +108,6 @@ export function useConfigNotification() {
       } else {
         handleRegistrationError(`${error}`);
       }
-      return {
-        receivedListenerUnSubscription: () => {},
-        responseListenerUnSubscription: () => {},
-      };
     }
   };
 

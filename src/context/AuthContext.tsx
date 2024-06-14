@@ -14,7 +14,7 @@ import { UserType } from "./types/UserContext";
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export function AuthContentProvider({ children }: AuthContentProviderProps) {
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [initialScreen, setInitialScreen] = useState<InitialScreenType>('Loading');
   const { setUser } = useUserContext();
 

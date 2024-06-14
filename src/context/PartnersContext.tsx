@@ -132,7 +132,21 @@ export function PartnersContextProvider({
   };
 
   return (
-    <PartnersContext.Provider value={{ partners, setPartners, loading, setLoading, modalLoading, setModalLoading, visible, setVisible, fetchAllPartners, handleCreateNewPartner, handleDeletePartnerByID, handleEditPartnerByID   }}>
+    <PartnersContext.Provider value={{ 
+        partners, 
+        setPartners, 
+        loading, 
+        setLoading, 
+        modalLoading, 
+        setModalLoading, 
+        visible, 
+        setVisible, 
+        fetchAllPartners, 
+        handleCreateNewPartner, 
+        handleDeletePartnerByID, 
+        handleEditPartnerByID   
+      }}
+    >
       {children}
     </PartnersContext.Provider>
   );
@@ -146,8 +160,34 @@ export function usePartnersContext() {
     throw new Error("Erro ao acessar o contexto PartnersContext.")
   };
 
-  const { partners, setPartners, loading, setLoading, modalLoading, setModalLoading, visible, setVisible, fetchAllPartners, handleCreateNewPartner, handleDeletePartnerByID, handleEditPartnerByID } = context;
+  const { 
+    partners, 
+    setPartners, 
+    loading, 
+    setLoading, 
+    modalLoading, 
+    setModalLoading, 
+    visible, 
+    setVisible, 
+    fetchAllPartners, 
+    handleCreateNewPartner, 
+    handleDeletePartnerByID, 
+    handleEditPartnerByID   
+  } = context;
 
-  return { partners, setPartners, loading, setLoading , modalLoading, setModalLoading, visible, setVisible, fetchAllPartners, handleCreateNewPartner, handleDeletePartnerByID, handleEditPartnerByID };
+  return { 
+    partners, 
+    setPartners, 
+    loading, 
+    setLoading, 
+    modalLoading, 
+    setModalLoading, 
+    visible, 
+    setVisible, 
+    fetchAllPartners, 
+    handleCreateNewPartner, 
+    handleDeletePartnerByID, 
+    handleEditPartnerByID   
+  };
 }
 

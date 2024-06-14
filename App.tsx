@@ -3,7 +3,6 @@ import { PaperProvider } from "react-native-paper";
 import { AppRoutes } from "./src/routes";
 import { ThemeProvider } from "styled-components/native";
 import { AuthContentProvider } from "./src/context/AuthContext";
-import { LoadingScreenContextProvider } from "./src/context/LoadingContext";
 import { PrivacyContextProvider } from "./src/context/PrivacyContext";
 import { PartnersContextProvider } from "./src/context/PartnersContext";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -22,7 +21,6 @@ export default function App() {
         }}
       >
         <GestureHandlerRootView style={{ flex: 1, height:"auto" }}>
-          <LoadingScreenContextProvider>
             <PrivacyContextProvider>
               
                 < UserContextProvider>
@@ -40,7 +38,6 @@ export default function App() {
                 </UserContextProvider>
             
             </PrivacyContextProvider>
-          </LoadingScreenContextProvider>
         </GestureHandlerRootView>
       </PaperProvider>
     </ThemeProvider>

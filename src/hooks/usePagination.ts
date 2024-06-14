@@ -10,7 +10,6 @@ type PaginateType<T> = {
 }
 
 type Indicators = {
-    to: number;
     numberOfPages: number;
     label: string;
 };
@@ -18,7 +17,6 @@ type Indicators = {
 export function usePagination () {
     const [page, setPage] = useState(0);
     const [numberOfItemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
-    const from = page * numberOfItemsPerPage;
 
 
     const handleOnItemsPerPageChange = (value:number) => {
@@ -39,7 +37,6 @@ export function usePagination () {
         const label = `${from + 1}-${to} de ${items.length}`;
     
         return {
-            to,
             numberOfPages,
             label
         };

@@ -93,7 +93,19 @@ export function PartnerFilterContextProvider({
     };
   
   return (
-    <PartnerFilterContext.Provider value={{ selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter , handleClearFilter}}>
+    <PartnerFilterContext.Provider value={{ 
+        selectedId, 
+        setSelectedId, 
+        loading, 
+        setLoading, 
+        visible, 
+        setVisible, 
+        isFiltred, 
+        setIsFiltred, 
+        handleFilter, 
+        handleClearFilter
+      }}
+    >
       {children}
     </PartnerFilterContext.Provider>
   );
@@ -107,8 +119,30 @@ export function usePartnerFilterContext() {
     throw new Error("Erro ao acessar o contexto PartnessFilterContext.");
   };
 
-  const { selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter, handleClearFilter} = context;
+  const { 
+    selectedId, 
+    setSelectedId, 
+    loading, 
+    setLoading, 
+    visible, 
+    setVisible, 
+    isFiltred, 
+    setIsFiltred, 
+    handleFilter, 
+    handleClearFilter
+  } = context;
 
-  return { selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter, handleClearFilter};
+  return { 
+    selectedId, 
+    setSelectedId, 
+    loading, 
+    setLoading, 
+    visible, 
+    setVisible, 
+    isFiltred, 
+    setIsFiltred, 
+    handleFilter, 
+    handleClearFilter
+  };
 }
 

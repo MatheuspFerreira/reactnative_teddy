@@ -5,7 +5,7 @@ import {
   Container,
 } from "./styled";
 
-interface CardProps {
+type CardProps = {
   children: ReactNode;
 };
 

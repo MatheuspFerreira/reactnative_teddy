@@ -137,7 +137,21 @@ export function CompaniesContextProvider({
   };
 
   return (
-    <CompaniesContext.Provider value={{ companies, setCompanies, loading, setLoading, modalLoading, setModalLoading, visible, setVisible, fetchAllCompanies, handleCreateNewCompany, handleDeleteCompanyByID, handleEditCompanyByID   }}>
+    <CompaniesContext.Provider value={{ 
+        companies, 
+        setCompanies, 
+        loading, 
+        setLoading, 
+        modalLoading, 
+        setModalLoading,
+        visible, 
+        setVisible, 
+        fetchAllCompanies, 
+        handleCreateNewCompany, 
+        handleDeleteCompanyByID, 
+        handleEditCompanyByID   
+      }}
+    >
       {children}
     </CompaniesContext.Provider>
   );
@@ -151,8 +165,34 @@ export function useCompaniesContext() {
     throw new Error("Erro ao acessar o contexto CompaniesContext.")
   };
 
-  const { companies, setCompanies, loading, setLoading, modalLoading, setModalLoading, visible, setVisible, fetchAllCompanies, handleCreateNewCompany, handleDeleteCompanyByID, handleEditCompanyByID } = context;
+  const { 
+    companies, 
+    setCompanies, 
+    loading, 
+    setLoading, 
+    modalLoading, 
+    setModalLoading,
+    visible, 
+    setVisible, 
+    fetchAllCompanies, 
+    handleCreateNewCompany, 
+    handleDeleteCompanyByID, 
+    handleEditCompanyByID   
+  } = context;
 
-  return { companies, setCompanies, loading, setLoading , modalLoading, setModalLoading, visible, setVisible, fetchAllCompanies, handleCreateNewCompany, handleDeleteCompanyByID, handleEditCompanyByID };
+  return { 
+    companies, 
+    setCompanies, 
+    loading, 
+    setLoading, 
+    modalLoading, 
+    setModalLoading,
+    visible, 
+    setVisible, 
+    fetchAllCompanies, 
+    handleCreateNewCompany, 
+    handleDeleteCompanyByID, 
+    handleEditCompanyByID   
+  };
 }
 

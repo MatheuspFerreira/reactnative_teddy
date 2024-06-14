@@ -3,20 +3,37 @@ import { COMPANIES_STORAGE } from "./storage-config";
 import { CompanyType } from "../context/types/CompaniesContext";
 
 export async function storageCompaniesSave(companies:CompanyType[] ) {
-  await AsyncStorage.setItem(COMPANIES_STORAGE , JSON.stringify(companies));
+  try {
+    await AsyncStorage.setItem(COMPANIES_STORAGE , JSON.stringify(companies));
+  } catch (error) {
+    throw error;
+  };
+
 };
 
 export async function storageCompaniesGet() {
-  const companies = await AsyncStorage.getItem(COMPANIES_STORAGE);
+  try {
+    const companies = await AsyncStorage.getItem(COMPANIES_STORAGE);
     
-  if(!companies) return companies;
+    if(!companies) return companies;
+  
+    const companiesToParse:CompanyType[] = JSON.parse(companies);
+  
+    return companiesToParse;
+    
+  } catch (error) {
+    throw error;
+  };
 
-  const companiesToParse:CompanyType[] = JSON.parse(companies);
-
-  return companiesToParse;
 };
 
 export async function storageCompaniesRemove () {
-  await AsyncStorage.removeItem(COMPANIES_STORAGE)
+  try {
+    await AsyncStorage.removeItem(COMPANIES_STORAGE);
+    
+  } catch (error) {
+    throw error;
+  };
+
 };
 
