@@ -3,7 +3,7 @@ import { Modal } from "../../../components/modal";
 import { ActionButton } from "../../../components/button/actionButton";
 import { Input } from "../../../components/input/inputText";
 import { Container, Label } from "./styled";
-import { usePartnerFilterContext } from "../../../context/PartnersFilterContext";
+import { useCompaniesFilterContext } from "../../../context/CompaniesFilterContext";
 
 
 export function Filter () {
@@ -16,7 +16,7 @@ export function Filter () {
         isFiltred,
         handleFilter, 
         handleClearFilter
-    } = usePartnerFilterContext();
+    } = useCompaniesFilterContext();
 
     const handleSelectId = (text:string) => {
         const numericText = text.replace(/[^0-9]/g, '');
@@ -34,7 +34,7 @@ export function Filter () {
                     <Input 
                         value={selectedId} 
                         onChangeText={handleSelectId} 
-                        placeholder="Digite o ID do parceiro"
+                        placeholder="Digite o ID da empresa"
                         keyboardType="numeric"
                         
                     />

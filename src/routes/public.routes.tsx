@@ -4,14 +4,17 @@ import { OnboardingScreen } from "../screens/onboarding";
 import { LoadingScreen } from "../screens/loading";
 import { LoginScreen } from "../screens/login";
 import { OnboardingContextProvider } from "../context/OnBoardingContext";
+import { useAuthContext } from "../context/AuthContext";
 
 
 const Stack = createStackNavigator<RootStackPublicParamList>();
 
 export function PublicRoutes() {
+  const { initialScreen } = useAuthContext();
+
   return (
     <Stack.Navigator
-      initialRouteName={'Loading'}
+      initialRouteName={initialScreen}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Loading" component={LoadingScreen} />

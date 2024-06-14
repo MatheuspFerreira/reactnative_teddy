@@ -1,27 +1,29 @@
 import { createContext, useContext, useState } from "react";
 import { useLoading } from "../hooks/useLoading";
 import { useModal } from "../hooks/useModal";
-import { usePartnersContext } from "./PartnersContext";
-import { filterPartnerByID } from "../api/partners/filterById-partner";
+
 import { handleApiError } from "../utils/helpers/handleApiError";
 import { useIsConnected } from "../hooks/useIsConnected";
 import { Alert } from "react-native";
-import { getAllPartners } from "../api/partners/getAll-partners";
 import { sortPartnersByIdDesc } from "../utils/helpers/sortPartnersByIdDesc";
-import { FilterContextProviderProps, FilterContextType, ResponseGetAllPartners, ResponsePartners } from "./types/FilterContext";
+import { FilterContextProviderProps, FilterContextType } from "./types/PartnersFilterContext";
+import { useCompaniesContext } from "./CompaniesContext";
+import { filterCompaniesByID } from "../api/companies/filterById-companies";
+import { ResponseCompanies, ResponseCompaniesType } from "./types/CompaniesContext";
+import { getAllCompanies } from "../api/companies/getAll-companies";
 
 
 
-export const PartnerFilterContext = createContext<FilterContextType | null>(null);
+export const CompaniesFilterContext = createContext<FilterContextType | null>(null);
 
-export function PartnerFilterContextProvider({
+export function CompaniesFilterContextProvider({
   children
 }: FilterContextProviderProps) {
     const [selectedId, setSelectedId] = useState("");
     const [isFiltred, setIsFiltred] = useState(false);
     const { loading, setLoading } = useLoading();
     const { visible, setVisible } = useModal();
-    const { setPartners } = usePartnersContext();
+    const { setCompanies } = useCompaniesContext();
 
     const handleFilter = async () => {
         try {
@@ -40,11 +42,11 @@ export function PartnerFilterContextProvider({
                 return;
             };
 
-            const response = await filterPartnerByID(selectedId);
+            const response = await filterCompaniesByID(selectedId);
 
-            const { data }:ResponsePartners = response;
+            const { data }:ResponseCompanies = response;
 
-            setPartners([data]);
+            setCompanies([data]);
             setIsFiltred(true);
             
         } catch (error) {
@@ -58,7 +60,7 @@ export function PartnerFilterContextProvider({
     const handleVerifyID = ():boolean => {
         if(selectedId) return true;
 
-        Alert.alert('Campo Obrigatório','Você precisa informar o ID do parceiro para buscar.',[{text:'Ok'}]);
+        Alert.alert('Campo Obrigatório','Você precisa informar o ID da empresa para buscar.',[{text:'Ok'}]);
 
         return false;
     };
@@ -67,7 +69,7 @@ export function PartnerFilterContextProvider({
         try {
             setLoading(true);
 
-            const isConnected = await useIsConnected("Ao limpar o filtro você está buscando todos os parceiros, você precisa estar online.");
+            const isConnected = await useIsConnected("Ao limpar o filtro você está buscando todas as empresas, você precisa estar online.");
 
             if(!isConnected) {
                 setVisible(false);
@@ -75,17 +77,17 @@ export function PartnerFilterContextProvider({
 
                 return;
             };
-            const response = await getAllPartners();
+            const response = await getAllCompanies();
 
-            const { data }:ResponseGetAllPartners = response;
+            const { data }:ResponseCompaniesType = response;
 
             const sortById = sortPartnersByIdDesc(data);
 
-            setPartners(sortById);
+            setCompanies(sortById);
             setIsFiltred(false);
             
         } catch (error) {
-            handleApiError({error, title:"Erro ao buscar a lista de parceiros."});
+            handleApiError({error, title:"Erro ao buscar a lista de empresas."});
         }finally{
             setLoading(false);
             setVisible(false);
@@ -94,18 +96,18 @@ export function PartnerFilterContextProvider({
     };
   
   return (
-    <PartnerFilterContext.Provider value={{ selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter , handleClearFilter}}>
+    <CompaniesFilterContext.Provider value={{ selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter , handleClearFilter}}>
       {children}
-    </PartnerFilterContext.Provider>
+    </CompaniesFilterContext.Provider>
   );
 }
 
 
-export function usePartnerFilterContext() {
-  const context = useContext(PartnerFilterContext);
+export function useCompaniesFilterContext() {
+  const context = useContext(CompaniesFilterContext);
   
   if(!context){
-    throw new Error("Erro ao acessar o contexto FilterContext.");
+    throw new Error("Erro ao acessar o contexto CompaniesFilterContext.");
   };
 
   const { selectedId, setSelectedId, loading, setLoading, visible, setVisible, isFiltred, setIsFiltred, handleFilter, handleClearFilter} = context;

@@ -41,7 +41,7 @@ export function PartnersContextProvider({
 
       const { data }: ResponsePartnersType = response;
 
-      const sortById = sortPartnersByIdDesc(data);
+      const sortById = sortPartnersByIdDesc<IPartners>(data);
 
       setPartners(sortById);
     } catch (error) {

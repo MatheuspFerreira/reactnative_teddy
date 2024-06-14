@@ -7,8 +7,10 @@ import { LoadingScreenContextProvider } from "./src/context/LoadingContext";
 import { PrivacyContextProvider } from "./src/context/PrivacyContext";
 import { PartnersContextProvider } from "./src/context/PartnersContext";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { PartnerFilterContextProvider } from "./src/context/FilterContext";
+import { PartnerFilterContextProvider } from "./src/context/PartnersFilterContext";
 import { UserContextProvider } from "./src/context/userContext";
+import { CompaniesContextProvider } from "./src/context/CompaniesContext";
+import { CompaniesFilterContextProvider } from "./src/context/CompaniesFilterContext";
 
 
 export default function App() {
@@ -20,21 +22,23 @@ export default function App() {
         }}
       >
         <GestureHandlerRootView style={{ flex: 1, height:"auto" }}>
-        <LoadingScreenContextProvider>
-          <PrivacyContextProvider>
-            <AuthContentProvider>
-              < UserContextProvider>
-       
-                <PartnersContextProvider>
-                  <PartnerFilterContextProvider>
-                    <AppRoutes />
-                  </PartnerFilterContextProvider>
-                
-                </PartnersContextProvider>
-              </UserContextProvider>
-            </AuthContentProvider>
-          </PrivacyContextProvider>
-        </LoadingScreenContextProvider>
+          <LoadingScreenContextProvider>
+            <PrivacyContextProvider>
+              <AuthContentProvider>
+                < UserContextProvider>
+                  <PartnersContextProvider>
+                    <PartnerFilterContextProvider>
+                      <CompaniesContextProvider>
+                        <CompaniesFilterContextProvider>
+                          <AppRoutes />
+                        </CompaniesFilterContextProvider>
+                      </CompaniesContextProvider>
+                    </PartnerFilterContextProvider>
+                  </PartnersContextProvider>
+                </UserContextProvider>
+              </AuthContentProvider>
+            </PrivacyContextProvider>
+          </LoadingScreenContextProvider>
         </GestureHandlerRootView>
       </PaperProvider>
     </ThemeProvider>

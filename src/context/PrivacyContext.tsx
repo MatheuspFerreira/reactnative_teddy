@@ -21,6 +21,7 @@ export function PrivacyContextProvider({ children }: PrivacyContextProviderProps
     <PrivacyContext.Provider
       value={{
         notificationIsOn,
+        setNotificationIsOn,
         policyIsOn,
         onToggleSwitchPolicy,
         onToggleSwitchNotification,
@@ -40,6 +41,7 @@ export function usePrivacyContext() {
 
   const {
     notificationIsOn,
+    setNotificationIsOn,
     policyIsOn,
     onToggleSwitchPolicy,
     onToggleSwitchNotification,
@@ -47,6 +49,7 @@ export function usePrivacyContext() {
 
   return {
     notificationIsOn,
+    setNotificationIsOn,
     policyIsOn,
     onToggleSwitchPolicy,
     onToggleSwitchNotification,

@@ -85,7 +85,10 @@ export function MenuScreen() {
   };
 
   const handleNavigation = ({ screen }: NavigateParamsType) => {
-    if(screen === "Setting") return;
+    if(screen === "Setting"){
+      Alert.alert('Atenção','Funcionalidade em desenvolvimento.');
+      return;
+    }
     navigation.navigate(screen);
   };
 

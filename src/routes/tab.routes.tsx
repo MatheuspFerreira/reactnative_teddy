@@ -8,6 +8,10 @@ import { Theme } from "../theme/default";
 import { Partners } from "../screens/partners";
 import { useUserContext } from "../context/userContext";
 import { isIOSPlatform } from "../utils/helpers/isIOSPlatform";
+import { Companies } from "../screens/companies";
+import { useConfigNotification } from "../notification/config";
+import { useEffect } from "react";
+import { Alert } from "react-native";
 
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -19,6 +23,23 @@ export function TabsRoutes() {
   const maxHeight = isIOS ? "auto" : 80;
   const tabBarHeight = isIOS ? Responsiveness(7.35) : Responsiveness(6.6);
 
+  const { handleNotificationConfig } = useConfigNotification();
+
+  useEffect(() => {
+    const configureNotifications = async () => {
+      const { receivedListenerUnSubscription, responseListenerUnSubscription } = await handleNotificationConfig();
+
+      return () => {
+        if (receivedListenerUnSubscription) receivedListenerUnSubscription();
+        if (responseListenerUnSubscription) responseListenerUnSubscription();
+      };
+    };
+
+    configureNotifications().catch((error) => {
+      Alert.alert('Error', `Failed to configure notifications: ${error}`);
+    });
+  }, []);
+
   return (
     <Tab.Navigator
       initialRouteName="Partners"
@@ -26,8 +47,8 @@ export function TabsRoutes() {
         tabBarActiveTintColor: Theme.colors.primary,
         tabBarStyle: {
           position: "absolute",
-          borderTopLeftRadius: fontSize(2.2),
-          borderTopRightRadius: fontSize(2.2),
+          borderTopLeftRadius: Responsiveness(2.2),
+          borderTopRightRadius: Responsiveness(2.2),
           borderTopWidth: 0,
           height: tabBarHeight,
           maxHeight: maxHeight,
@@ -65,8 +86,8 @@ export function TabsRoutes() {
       />
 
       <Tab.Screen
-        name="Business"
-        component={Partners}
+        name="Companies"
+        component={Companies}
         options={{
           headerTitle: `Bem vindo, ${user ? user.name : 'User name'}`,
           tabBarLabel: "Empresas",

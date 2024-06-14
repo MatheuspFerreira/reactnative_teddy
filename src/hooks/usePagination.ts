@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { usePartnersContext } from "../context/PartnersContext";
 
   
 const numberOfItemsPerPageList = [3, 4, 5];
@@ -8,17 +7,19 @@ type PaginateType<T> = {
     items:T[],
     page:number,
     itemsPerPage:number;
-
 }
+
+type Indicators = {
+    to: number;
+    numberOfPages: number;
+    label: string;
+};
 
 export function usePagination () {
     const [page, setPage] = useState(0);
     const [numberOfItemsPerPage, onItemsPerPageChange] = useState(numberOfItemsPerPageList[0]);
-    const { partners } = usePartnersContext();
     const from = page * numberOfItemsPerPage;
-    const to = Math.min((page + 1) * numberOfItemsPerPage, partners.length);
-    const numberOfPages= Math.ceil(partners.length / numberOfItemsPerPage)
-    const label=`${from + 1}-${to} de ${partners.length}`
+
 
     const handleOnItemsPerPageChange = (value:number) => {
         onItemsPerPageChange(value);
@@ -30,14 +31,26 @@ export function usePagination () {
         const end = start + itemsPerPage;
         return items.slice(start, end);
     };
+
+    const getIndicators = <T>(items: T[]): Indicators => {
+        const to = Math.min((page + 1) * numberOfItemsPerPage, items.length);
+        const from = page * numberOfItemsPerPage;
+        const numberOfPages = Math.ceil(items.length / numberOfItemsPerPage);
+        const label = `${from + 1}-${to} de ${items.length}`;
+    
+        return {
+            to,
+            numberOfPages,
+            label
+        };
+    };
       
 
 
     return {
         page,
         setPage,
-        numberOfPages,
-        label,
+        getIndicators,
         numberOfItemsPerPageList,
         numberOfItemsPerPage,
         handleOnItemsPerPageChange,

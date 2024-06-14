@@ -1,9 +1,9 @@
-import { handleApiError } from "../utils/helpers/handleApiError";
-import * as Notifications from "expo-notifications";
+import { useEffect, useRef } from "react";
 import { Alert, Platform } from "react-native";
-import { AppError } from "../utils/appError";
+import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
-import { useRef } from "react";
+import { handleApiError } from "../utils/helpers/handleApiError";
+import { AppError } from "../utils/appError";
 
 export type TokenType = Notifications.DevicePushToken;
 
@@ -15,16 +15,26 @@ Notifications.setNotificationHandler({
   }),
 });
 
-
 export function useConfigNotification() {
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
 
-  function handleRegistrationError(errorMessage: string) {
-    Alert.alert("Erro", errorMessage,[{text:"Ok"}]);
+  useEffect(() => {
+    return () => {
+      if (notificationListener.current) {
+        Notifications.removeNotificationSubscription(notificationListener.current);
+      }
+      if (responseListener.current) {
+        Notifications.removeNotificationSubscription(responseListener.current);
+      }
+    };
+  }, []);
+
+  const handleRegistrationError = (errorMessage: string) => {
+    Alert.alert("Erro", errorMessage, [{ text: "Ok" }]);
   };
 
-  async function setAndroidNotificationChannel () {
+  const setAndroidNotificationChannel = async () => {
     try {
       if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("default", {
@@ -32,80 +42,70 @@ export function useConfigNotification() {
           importance: Notifications.AndroidImportance.MAX,
           vibrationPattern: [0, 250, 250, 250],
         });
-      };
-      
-    } catch (error:unknown) {
+      }
+    } catch (error) {
       throw error;
-    };
+    }
   };
-  
-  async function registerForPushNotificationsAsync() {
+
+  const registerForPushNotificationsAsync = async (): Promise<TokenType | undefined> => {
     try {
       await setAndroidNotificationChannel();
-  
+
       if (Device.isDevice) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  
+
         if (existingStatus !== "granted") {
           await Notifications.requestPermissionsAsync();
-        };
-      
-        const pushTokenString = await Notifications.getDevicePushTokenAsync();
+        }
 
+        const pushTokenString = await Notifications.getDevicePushTokenAsync();
         return pushTokenString;
-     
       } else {
         throw new Error("É necessário usar um dispositivo físico para notificações push.");
       }
-    } catch (error: unknown) {
+    } catch (error) {
       throw error;
     }
-
   };
 
-  
-  async function handleNotificationConfig  () {
+  const handleNotificationConfig = async () => {
     try {
       const token = await registerForPushNotificationsAsync();
 
-      //chama da de uma api para salvar / validar o token
+      // Chamada da API para salvar/validar o token (exemplo):
+      // await savePushTokenToApi(token);
 
       notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-        // Espaço para alguma ação quando recebemos notificações;
-      
-        
-      });
-  
-      responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-        // Espaço para definir qual ação vamos ter quando usuário clicar na notificação;
-      
+        // Ação ao receber uma notificação
+        console.log("Notificação recebida: ", notification);
       });
 
-      const receivedListenerUnSubscription = () => notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
-      
-      const responseListenerUnSubscription = () => responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
-      
+      responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+        // Ação ao clicar na notificação
+        console.log("Resposta da notificação: ", response);
+      });
+
+      const receivedListenerUnSubscription = () =>
+        notificationListener.current && Notifications.removeNotificationSubscription(notificationListener.current);
+
+      const responseListenerUnSubscription = () =>
+        responseListener.current && Notifications.removeNotificationSubscription(responseListener.current);
+
       return {
         receivedListenerUnSubscription,
-        responseListenerUnSubscription
+        responseListenerUnSubscription,
       };
-      
     } catch (error: unknown) {
-      const isAppError = error instanceof AppError;
-      
-      if(isAppError){
-        handleApiError ({ error, title:"Erro" })
-        return;
-      };
-
-      handleRegistrationError(`${error}`);
-    };
+      if (error instanceof AppError) {
+        handleApiError({ error, title: "Erro" });
+      } else {
+        handleRegistrationError(`${error}`);
+      }
+    }
   };
 
   return {
-    handleNotificationConfig
+    handleNotificationConfig,
   };
-};
-
-  
-
+}

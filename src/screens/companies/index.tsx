@@ -13,20 +13,20 @@ import {
   OverLay,
   DataTable,
 } from "./styled";
-import { usePartnersContext } from "../../context/PartnersContext";
-import { PartnerCard } from "./partnersCard";
+import { CompanyCard } from "./companiesCard";
 import { Responsiveness } from "../../utils/styles/SizeResponsiveness";
 import { Filter } from "./filter";
-import { usePartnerFilterContext } from "../../context/PartnersFilterContext";
-import { CreatePartner } from "./createPartner";
+import { CreateCompany } from "./createCompany";
 import { DataTable as PaperDataTable} from "react-native-paper";
 import { usePagination } from "../../hooks/usePagination";
+import { useCompaniesContext } from "../../context/CompaniesContext";
+import { useCompaniesFilterContext } from "../../context/CompaniesFilterContext";
 
 
 
-export function Partners() {
-  const { partners, loading, setVisible, fetchAllPartners } = usePartnersContext();
-  const { setVisible:setFilterVisible, isFiltred } = usePartnerFilterContext();
+export function Companies() {
+  const { companies, loading, setVisible, fetchAllCompanies} = useCompaniesContext();
+  const { setVisible:setFilterVisible, isFiltred } = useCompaniesFilterContext();
   const {
     page,
     setPage,
@@ -38,20 +38,20 @@ export function Partners() {
     
   } = usePagination();
 
-  const { numberOfPages, label } = getIndicators(partners);
+  const { numberOfPages, label } = getIndicators(companies)
 
-  const partnersFiltred = handlePaginate({items:partners,page,itemsPerPage:numberOfItemsPerPage});
+  const companiesFiltred = handlePaginate({items:companies,page,itemsPerPage:numberOfItemsPerPage});
 
   useFocusEffect(
     useCallback(() => {
-      fetchAllPartners();
+      fetchAllCompanies();
     }, [])
   );
 
   return (
     <Container>
 
-      <CreatePartner />
+      <CreateCompany />
 
       <Filter />
       
@@ -76,14 +76,14 @@ export function Partners() {
         <OverLay>
           <Loading size={44} />
           <Title style={{ textAlign: "center" }}>
-            Buscando parceiros, aguarde...
+            Buscando empresas, aguarde...
           </Title>
         </OverLay>
         :
         <>
           <FlatList
             scrollEnabled={true}
-            data={partnersFiltred}
+            data={companiesFiltred}
             keyExtractor={(item) => `${item.id}`}
             initialNumToRender={4}
             contentContainerStyle={{
@@ -93,7 +93,7 @@ export function Partners() {
             }}
             renderItem={({ item }) => (
            
-              <PartnerCard partner={item} />
+              <CompanyCard company={item} />
              
             )}
           />

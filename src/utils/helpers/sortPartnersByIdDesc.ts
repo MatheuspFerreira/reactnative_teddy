@@ -1,5 +1,3 @@
-import { IPartners } from "../../interface/IPartners";
-
-export function sortPartnersByIdDesc(partners: IPartners[]): IPartners[] {
-    return partners.sort((a, b) => Number(b.id) - Number(a.id));
-};
+export function sortPartnersByIdDesc<T extends { id: string }>(array: T[]): T[] {
+    return array.sort((a, b) => Number(b.id) - Number(a.id));
+}

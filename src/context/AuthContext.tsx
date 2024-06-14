@@ -2,26 +2,36 @@ import { createContext, useContext, useState } from "react";
 import {
   AuthContextProps,
   AuthContentProviderProps,
+  InitialScreenType,
 } from "./types/AuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { handleApiError } from "../utils/helpers/handleApiError";
+import { storageUserRemove } from "../storage/storage-user";
 
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export function AuthContentProvider({ children }: AuthContentProviderProps) {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [initialScreen, setInitialScreen] = useState<InitialScreenType>('Loading');
 
   const toggleLogout = async () => {
     try {
-     await AsyncStorage.clear();
-
+      setInitialScreen('Login')
+      await clearAsyncStorage();
     } catch (error) {
       handleApiError({error, title:"Erro"})
     }finally {
       setIsSignedIn(false);
     };
-
   };
+
+  const clearAsyncStorage = async () => {
+    try {
+      await storageUserRemove();
+    } catch (error) {
+      throw error;
+      
+    }
+  }
   
   return (
     <AuthContext.Provider
@@ -29,6 +39,8 @@ export function AuthContentProvider({ children }: AuthContentProviderProps) {
         isSignedIn,
         setIsSignedIn,
         toggleLogout,
+        initialScreen, 
+        setInitialScreen
       }}
     >
       {children}
@@ -47,11 +59,15 @@ export function useAuthContext() {
     isSignedIn,
     setIsSignedIn,
     toggleLogout,
+    initialScreen, 
+    setInitialScreen
   } = context;
 
   return {
     isSignedIn,
     setIsSignedIn,
     toggleLogout,
+    initialScreen, 
+    setInitialScreen
   };
 }

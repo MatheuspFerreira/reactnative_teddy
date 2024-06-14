@@ -9,7 +9,7 @@ export type RootStackPublicParamList = {
 
 export type RootTabParamList = {
   Partners: undefined;
-  Business: undefined;
+  Companies: undefined;
   Menu: NavigatorScreenParams<RootStackParamList>;
 };
 

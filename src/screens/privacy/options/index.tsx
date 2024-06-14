@@ -11,29 +11,27 @@ import { useEffect } from "react";
 export function PrivacyOptions() {
   const {
     notificationIsOn,
+    setNotificationIsOn,
     policyIsOn,
     onToggleSwitchPolicy,
-    onToggleSwitchNotification,
   } = usePrivacyContext();
 
   const toggleNotification = async () => {
     try {
       if(notificationIsOn){
-        onToggleSwitchNotification();
+        setNotificationIsOn(true);
         return;
       };
 
       const { status } = await Notifications.getPermissionsAsync();
 
       if(status === "granted"){
-        onToggleSwitchNotification();
+        setNotificationIsOn(true);
         return;
 
       }else {
         
         const { status } = await Notifications.requestPermissionsAsync();
-        
-        onToggleSwitchNotification();
         
         if(status !== "granted"){
           Linking.openSettings();
@@ -52,13 +50,15 @@ export function PrivacyOptions() {
       
       const { status:initialStatus } = await Notifications.getPermissionsAsync();
 
-      let isStatusAuthorized = initialStatus === "granted";
+      var isStatusAuthorized = initialStatus === "granted";
 
       if(!isStatusAuthorized){
         const { status:finalStatus } = await Notifications.requestPermissionsAsync();
+        
         isStatusAuthorized = finalStatus === "granted";
-        await onToggleSwitchNotification();
       }
+
+      setNotificationIsOn(isStatusAuthorized)
       
     } catch (error) {
       handleApiError(
