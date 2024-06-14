@@ -1,7 +1,7 @@
 import NetInfo from "@react-native-community/netinfo";
 import { Alert } from "react-native";
 
-export async function useIsConnected(msg?: string): Promise<boolean | null> {
+export async function useIsConnected(msg: string): Promise<boolean | null> {
     const netInfo = await NetInfo.fetch();
 
     const { isConnected } = netInfo;

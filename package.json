@@ -2,7 +2,7 @@
   "name": "teddy-open",
   "version": "1.0.00",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "test": "jest",
     "android": "expo run:android",
     "ios": "expo run:ios",
