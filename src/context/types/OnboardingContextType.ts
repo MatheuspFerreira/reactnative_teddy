@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
 export type OnboardingContextType = {
-  onBoarding: number;
-  setOnBoarding: React.Dispatch<React.SetStateAction<number>>;
+  onBoarding: string;
+  setOnBoarding: React.Dispatch<React.SetStateAction<string>>;
   handleNavigateNextScreen: () => void;
   handleNavigateGobackScreen: () => void;
 };

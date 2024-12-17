@@ -6,12 +6,17 @@ import { OnboardingContextProviderType, OnboardingContextType } from "./types/On
 
 export const OnboardingContext = createContext<OnboardingContextType | null>(null);
 
+export enum OnboardingJourneyEnum {
+  FIRST_STEP = 'first-step',
+  SECOND_STEP = 'second-step',
+}
+
 export function OnboardingContextProvider({children}:OnboardingContextProviderType) {
-  const [onBoarding, setOnBoarding] = useState<number>(1);
+  const [onBoarding, setOnBoarding] = useState<string>(OnboardingJourneyEnum.FIRST_STEP);
   const navigation = useNavigation<NavigationProp<RootStackPublicParamList, "Onboarding">>();
 
   const handleNavigateNextScreen = async () => {
-    if (onBoarding === 2) {
+    if (onBoarding === OnboardingJourneyEnum.SECOND_STEP) {
       await storageOnboardingSave();
 
       navigation.navigate("Login");
@@ -19,19 +24,18 @@ export function OnboardingContextProvider({children}:OnboardingContextProviderTy
       return;
     };
 
-    setOnBoarding((current) => current + 1);
+    setOnBoarding( OnboardingJourneyEnum.SECOND_STEP);
   };
 
   const handleNavigateGobackScreen = async () => {
-    if (onBoarding === 1) {
+    if (onBoarding === OnboardingJourneyEnum.FIRST_STEP) {
       await storageOnboardingSave();
 
       navigation.navigate("Login");
 
       return;
     };
-
-    setOnBoarding((current) => current - 1);
+    setOnBoarding(OnboardingJourneyEnum.FIRST_STEP)
   };
 
   return (

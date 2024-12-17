@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native";
 import { OnBoardingProps } from "./interface/OnBoardingProps";
-import { useOnBoardingContext } from "../../context/OnBoardingContext";
+import { OnboardingJourneyEnum, useOnBoardingContext } from "../../context/OnBoardingContext";
 import {
   OverLay,
   Container,
@@ -27,11 +27,11 @@ export function OnBoarding({
     handleNavigateGobackScreen,
   } = useOnBoardingContext();
   
-  const nextButtonText = onBoarding == 1 ? "Próximo" : "Próximo";
+  const isFirstStepActivated =  onBoarding === OnboardingJourneyEnum.FIRST_STEP;
+  const isSecondStepActivated =  onBoarding === OnboardingJourneyEnum.SECOND_STEP;
 
-  const backButtonText = onBoarding == 1 ? "Pular" : "Voltar";
-
-  const cardTitle = onBoarding == 1 ? "Um app para Gerenciar Parceiros e Empresas" : "Dashboard de Parceiros";
+  const backButtonText = isFirstStepActivated ? "Pular" : "Voltar";
+  const cardTitle = isFirstStepActivated ? "Um app para Gerenciar Parceiros e Empresas" : "Dashboard de Parceiros";
 
   
   return (
@@ -47,15 +47,15 @@ export function OnBoarding({
         </ImageContainer>
         <CardContainer>
           <CardFeedBackContainer>
-            <CircleIcon active={onBoarding === 1} />
-            <CircleIcon active={onBoarding === 2} />
+            <CircleIcon active={isFirstStepActivated} />
+            <CircleIcon active={isSecondStepActivated} />
           </CardFeedBackContainer>
           <CardTitle>{cardTitle}</CardTitle>
           {children}
           <SafeAreaView style={{ width: "100%" }}>
             <CardFooter>
               <NextButton onPress={handleNavigateNextScreen}>
-                <NextButtonText>{nextButtonText}</NextButtonText>
+                <NextButtonText>{"Próximo"}</NextButtonText>
               </NextButton>
               <BackButton onPress={handleNavigateGobackScreen}>
                 <BackButtonText>{backButtonText}</BackButtonText>
