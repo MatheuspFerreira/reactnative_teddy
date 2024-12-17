@@ -1,10 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { COMPANIES_STORAGE } from "./storage-config";
 import { CompanyType } from "../context/types/CompaniesContext";
+import { StorageConfigEnum } from "./storage-config.enum";
+
+
+const companiesConfig = StorageConfigEnum.COMPANIES_STORAGE;
 
 export async function storageCompaniesSave(companies:CompanyType[] ) {
   try {
-    await AsyncStorage.setItem(COMPANIES_STORAGE , JSON.stringify(companies));
+    await AsyncStorage.setItem(companiesConfig , JSON.stringify(companies));
   } catch (error) {
     throw error;
   };
@@ -13,7 +16,7 @@ export async function storageCompaniesSave(companies:CompanyType[] ) {
 
 export async function storageCompaniesGet() {
   try {
-    const companies = await AsyncStorage.getItem(COMPANIES_STORAGE);
+    const companies = await AsyncStorage.getItem(companiesConfig);
     
     if(!companies) return companies;
   
@@ -29,7 +32,7 @@ export async function storageCompaniesGet() {
 
 export async function storageCompaniesRemove () {
   try {
-    await AsyncStorage.removeItem(COMPANIES_STORAGE);
+    await AsyncStorage.removeItem(companiesConfig);
     
   } catch (error) {
     throw error;

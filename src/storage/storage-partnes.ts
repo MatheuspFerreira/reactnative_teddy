@@ -1,13 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PARTNES_STORAGE } from "./storage-config";
 import { IPartners } from "../interface/IPartners";
+import { StorageConfigEnum } from "./storage-config.enum";
 
 
+const partnesConfig = StorageConfigEnum.PARTNES_STORAGE;
 
 export async function storagePartnesSave(partnes:IPartners[]) {
 
   try {
-    await AsyncStorage.setItem(PARTNES_STORAGE, JSON.stringify(partnes));
+    await AsyncStorage.setItem(partnesConfig, JSON.stringify(partnes));
   } catch (error) {
     throw error;
   }
@@ -15,7 +16,7 @@ export async function storagePartnesSave(partnes:IPartners[]) {
 
 export async function storagePartnesGet() {
   try {
-    const partnes = await AsyncStorage.getItem(PARTNES_STORAGE);
+    const partnes = await AsyncStorage.getItem(partnesConfig);
     
     if(!partnes) return partnes;
   
@@ -31,7 +32,7 @@ export async function storagePartnesGet() {
 
 export async function storagePartnesRemove() {
   try {
-    await AsyncStorage.removeItem(PARTNES_STORAGE)
+    await AsyncStorage.removeItem(partnesConfig)
   } catch (error) {
     throw error;
   }

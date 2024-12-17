@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { USER_STORAGE } from "./storage-config";
 import { UserType } from "../context/types/UserContext";
+import { StorageConfigEnum } from "./storage-config.enum";
 
-
+const userConfig = StorageConfigEnum.USER_STORAGE;
 export async function storageUserSave(user:UserType) {
   try {
-    await AsyncStorage.setItem( USER_STORAGE, JSON.stringify(user));
+    await AsyncStorage.setItem(userConfig, JSON.stringify(user));
   } catch (error) {
     throw error
   }
@@ -13,7 +13,7 @@ export async function storageUserSave(user:UserType) {
 
 export async function storageUserGet(): Promise<string | UserType> {
   try {
-    const user = await AsyncStorage.getItem(USER_STORAGE);
+    const user = await AsyncStorage.getItem(userConfig);
 
     if (!user) return user;
 
@@ -27,10 +27,9 @@ export async function storageUserGet(): Promise<string | UserType> {
 
 export async function storageUserRemove () {
   try {
-    await AsyncStorage.removeItem(USER_STORAGE)
+    await AsyncStorage.removeItem(userConfig)
   } catch (error) {
     throw error;
   }
-  
 };
 

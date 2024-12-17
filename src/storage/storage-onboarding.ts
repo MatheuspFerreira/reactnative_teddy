@@ -1,11 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ONBOARDING_STORAGE } from "./storage-config";
+import { StorageConfigEnum } from "./storage-config.enum";
 
+const onboardingConfig = StorageConfigEnum.ONBOARDING_STORAGE;
 
 export async function storageOnboardingSave() {
     try {
         const onboarding = JSON.stringify({firstAccess:false});
-        await AsyncStorage.setItem( ONBOARDING_STORAGE, onboarding);
+        await AsyncStorage.setItem( onboardingConfig, onboarding);
         
     } catch (error) {
         throw error;
@@ -15,7 +16,7 @@ export async function storageOnboardingSave() {
 
 export async function storageOnboardingGet() {
     try {
-        const onboarding = await AsyncStorage.getItem(ONBOARDING_STORAGE);
+        const onboarding = await AsyncStorage.getItem(onboardingConfig);
     
         if(!onboarding) return onboarding;
     
@@ -29,7 +30,7 @@ export async function storageOnboardingGet() {
   
 export async function storageOnboardingRemove () {
     try {
-        await AsyncStorage.removeItem(ONBOARDING_STORAGE);
+        await AsyncStorage.removeItem(onboardingConfig);
     } catch (error) {
         throw error;
     }
